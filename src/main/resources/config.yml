@@ -1,0 +1,13 @@
+sound:
+  enabled: true
+  name: BLOCK_GRINDSTONE_USE
+  volume: 0.5
+  pitch: 1.5
+particle:
+  enabled: true
+  name: FIREWORK
+delay-effect: 10 #Play every 10 item transfer
+disable-world:
+  - example
+  - example_nether
+  - example_the_end

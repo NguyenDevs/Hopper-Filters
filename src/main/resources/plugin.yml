@@ -1,0 +1,26 @@
+name: HopperFilter
+version: '1.0.0'
+main: com.NguyenDevs.hopperFilter.HopperFilter
+api-version: '1.19'
+commands:
+  hopperfilter:
+    description: Reload plugin
+    aliases:
+      - hf
+    usage: /<command> reload
+permissions:
+  hopperfilter.admin:
+    description: Allows admin to reload plugin.
+    default: op
+  hopperfilter.use:
+    description: Allows players to use the hopper filter functionality.
+    default: true
+  hopperfilter.bypass:
+    description: Allows players to bypass disabled world restrictions for hopper filters.
+    default: op
+  hopperfilter.limit.*:
+    description: Allows players to create unlimited hopper filters.
+    default: op
+  hopperfilter.limit.<n>:
+    description: Allows players to create up to n hopper filters.
+    default: false

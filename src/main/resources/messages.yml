@@ -1,0 +1,8 @@
+prefix: "&8[&7HopperFilter&8]"
+filter-gui-title: "&8HopperFilter"
+no-permission: "&cYou don't have permission to do this!"
+usage: "&7Usage: /hopperfilter <reload>"
+reload-success: "&aConfiguration reloaded successfully!"
+invalid-command: "&cIncorrect command! Usage: /hopperfilter <reload>"
+limit-reached: "&cYou have reached your hopper filter limit of %limit%!"
+world-disabled: "&cThe hopper filter is disabled in this world!"

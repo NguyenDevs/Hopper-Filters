@@ -102,7 +102,7 @@ public class HopperManager {
         int currentCount = playerHopperCounts.getOrDefault(player.getUniqueId(), 0);
         if (currentCount >= playerLimit) {
             player.sendMessage(getMessage("prefix", "&8[&7HopperFilter&8]") + " " +
-                    getMessage("limit-reached", "&cYou have reached your hopper filter limit of " + playerLimit + "!"));
+                    getMessage("limit-reached", "&cYou have reached your hopper filter limit of %limit%!").replace("%limit%", String.valueOf(playerLimit)));
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.5f);
             return false;
         }

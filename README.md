@@ -15,7 +15,7 @@ Perfect for survival, factions, or any server where precise item sorting is key!
 
 ## Commands
 - `/hopperfilter reload` reloads the configuration file.
-
+## Permissions
 - `hopperfilter.admin` Allows admin command.
 - `hopperfilter.use` Allows players to create and manage hopper filters.
 - `hopperfilter.bypass` Permits use of filters in disabled worlds.

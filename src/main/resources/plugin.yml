@@ -1,5 +1,5 @@
 name: HopperFilter
-version: '1.0.2'
+version: '1.0.3'
 main: com.NguyenDevs.hopperFilter.HopperFilter
 api-version: '1.19'
 commands:

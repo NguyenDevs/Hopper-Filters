@@ -57,7 +57,6 @@ public class HopperManager {
                     playerHopperCounts.put(owner, playerHopperCounts.getOrDefault(owner, 0) + 1);
                 }
             } catch (NumberFormatException | NullPointerException ignored) {
-                // Ignore invalid entries
             }
         }
     }
@@ -70,7 +69,7 @@ public class HopperManager {
         for (Map.Entry<Location, List<Material>> entry : hopperFilters.entrySet()) {
             Location location = entry.getKey();
             UUID owner = hopperOwners.get(location);
-            if (owner == null) continue; // Skip if no owner
+            if (owner == null) continue;
 
             String key = location.getWorld().getName() + "," + location.getBlockX() + "," +
                     location.getBlockY() + "," + location.getBlockZ() + "," + owner.toString();

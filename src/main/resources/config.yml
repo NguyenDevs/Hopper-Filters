@@ -1,3 +1,4 @@
+update-notify: true
 menu-slot: 27
 sound:
   enabled: true

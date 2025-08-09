@@ -30,6 +30,30 @@ public class HopperListener implements Listener {
     public HopperListener(HopperFilter plugin, HopperManager hopperManager) {
         this.plugin = plugin;
         this.hopperManager = hopperManager;
+        validateMenuSlots();
+    }
+
+    private void validateMenuSlots() {
+        int defaultSlots = plugin.getConfig().getInt("menu-slot", 27);
+        if (defaultSlots % 9 != 0 || defaultSlots < 9) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&7HopperFilter&8] &cInvalid menu-slot value in config.yml:" + defaultSlots + ". Must be 9, 18, 27, etc. Using default value 27."));
+            plugin.getConfig().set("menu-slot", 27);
+            try {
+                plugin.saveConfig();
+            } catch (Exception e) {
+                plugin.getLogger().severe("Failed to save config.yml: " + e.getMessage());
+            }
+        }
+    }
+
+    private int getPlayerMenuSlots(Player player) {
+        int defaultSlots = plugin.getConfig().getInt("menu-slot", 27);
+        for (int slots = 54; slots >= 9; slots -= 9) {
+            if (player.hasPermission("hopperfilter.menu." + slots)) {
+                return slots;
+            }
+        }
+        return defaultSlots;
     }
 
     @EventHandler
@@ -68,11 +92,12 @@ public class HopperListener implements Listener {
         if (title.endsWith(" Unknown")) {
             title = hopperManager.getMessage("filter-gui-title", "&8[&7HopperFilter&8]");
         }
-        Inventory filterInventory = plugin.getServer().createInventory(null, 27, title);
+        int slots = getPlayerMenuSlots(player);
+        Inventory filterInventory = plugin.getServer().createInventory(null, slots, title);
 
         if (hopperManager.getHopperFilters().containsKey(hopperLocation)) {
             List<Material> materials = hopperManager.getHopperFilters().get(hopperLocation);
-            for (int i = 0; i < Math.min(materials.size(), 27); i++) {
+            for (int i = 0; i < Math.min(materials.size(), slots); i++) {
                 filterInventory.setItem(i, new ItemStack(materials.get(i), 1));
             }
         }
@@ -99,6 +124,12 @@ public class HopperListener implements Listener {
         }
         if (!event.getView().getTitle().equals(expectedTitle)) return;
 
+        int slots = getPlayerMenuSlots(player);
+        if (event.getSlot() >= slots) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (event.getClickedInventory() == event.getView().getTopInventory()) {
             event.setCancelled(true);
 
@@ -114,7 +145,7 @@ public class HopperListener implements Listener {
 
             Inventory filterInventory = event.getView().getTopInventory();
             boolean materialExists = false;
-            for (int i = 0; i < 27; i++) {
+            for (int i = 0; i < slots; i++) {
                 ItemStack slotItem = filterInventory.getItem(i);
                 if (slotItem != null && slotItem.getType() == clickedItem.getType()) {
                     materialExists = true;
@@ -129,7 +160,7 @@ public class HopperListener implements Listener {
                 return;
             }
 
-            for (int i = 0; i < 27; i++) {
+            for (int i = 0; i < slots; i++) {
                 ItemStack slotItem = filterInventory.getItem(i);
                 if (slotItem == null || slotItem.getType() == Material.AIR) {
                     ItemStack copyItem = new ItemStack(clickedItem.getType(), 1);
@@ -159,10 +190,11 @@ public class HopperListener implements Listener {
 
         openInventories.remove(playerId);
 
+        int slots = getPlayerMenuSlots(player);
         List<Material> filterMaterials = new ArrayList<>();
         Inventory filterInventory = event.getInventory();
 
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < slots; i++) {
             ItemStack item = filterInventory.getItem(i);
             if (item != null && item.getType() != Material.AIR) {
                 filterMaterials.add(item.getType());
@@ -192,7 +224,7 @@ public class HopperListener implements Listener {
         if (!(event.getDestination().getHolder() instanceof Hopper)) return;
 
         Hopper hopper = (Hopper) event.getDestination().getHolder();
-        Location hopperLocation = hopper.getLocation().getBlock().getLocation(); // Normalize location
+        Location hopperLocation = hopper.getLocation().getBlock().getLocation();
 
         if (!hopperManager.getHopperFilters().containsKey(hopperLocation)) return;
 
@@ -208,7 +240,7 @@ public class HopperListener implements Listener {
         int transferredCount = hopperTransferCount.get(hopperLocation);
 
         if (transferredCount >= plugin.getConfig().getDouble("delay-effect")) {
-            hopperTransferCount.put(hopperLocation, 0); // Reset count
+            hopperTransferCount.put(hopperLocation, 0);
 
             if (plugin.getConfig().getBoolean("sound.enabled", true)) {
                 try {
@@ -217,13 +249,13 @@ public class HopperListener implements Listener {
                     float pitch = (float) plugin.getConfig().getDouble("sound.pitch", 1.0);
                     hopperLocation.getWorld().playSound(hopperLocation.clone().add(0.5, 0.5, 0.5), sound, volume, pitch);
                 } catch (IllegalArgumentException e) {
-                    plugin.getLogger().warning("Invalid sound name in config.yml: " + plugin.getConfig().getString("sound.name"));
+                    Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&7HopperFilter&8] &cInvalid sound name in config.yml: " + plugin.getConfig().getString("sound.name")));
                 }
             }
 
             if (plugin.getConfig().getBoolean("particle.enabled", true)) {
-                Location center = hopperLocation.clone().add(0.5, 1.0, 0.5); // Above hopper
-                startSpiralEffect(center); // Call directly
+                Location center = hopperLocation.clone().add(0.5, 1.0, 0.5);
+                startSpiralEffect(center);
             }
         }
     }
@@ -235,7 +267,7 @@ public class HopperListener implements Listener {
         try {
             particle = Particle.valueOf(plugin.getConfig().getString("particle.name", "FIREWORKS_SPARK"));
         } catch (IllegalArgumentException e) {
-            plugin.getLogger().warning("Invalid particle name in config.yml: " + plugin.getConfig().getString("particle.name"));
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&7HopperFilter&8] &cInvalid particle name in config.yml: " + plugin.getConfig().getString("particle.name")));
             return;
         }
 

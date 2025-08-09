@@ -63,7 +63,7 @@ public class HopperManager {
 
     public void saveHopperFilters() {
         FileConfiguration dataConfig = plugin.getDataConfig();
-        dataConfig.set("hopper-filters", null); // Clear existing data
+        dataConfig.set("hopper-filters", null);
         ConfigurationSection section = dataConfig.createSection("hopper-filters");
 
         for (Map.Entry<Location, List<Material>> entry : hopperFilters.entrySet()) {

@@ -27,14 +27,14 @@ public class HopperCommand implements CommandExecutor, TabCompleter {
 
         if (!sender.hasPermission("hopperfilter.admin")) {
             sender.sendMessage(prefix + " " + hopperManager.getMessage("no-permission", "&cYou don't have permission to do this!"));
-            if(sender instanceof Player player){
+            if (sender instanceof Player player) {
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.5f);
             }
             return true;
         }
 
         if (args.length == 0) {
-            sender.sendMessage(prefix + " " + hopperManager.getMessage("usage", "&7Usage: /hopperfilter reload"));
+            sender.sendMessage(prefix + " " + hopperManager.getMessage("usage", "&7Usage: /hopperfilter <reload>"));
             return true;
         }
 
@@ -44,8 +44,8 @@ public class HopperCommand implements CommandExecutor, TabCompleter {
             hopperManager.loadHopperFilters();
             sender.sendMessage(prefix + " " + hopperManager.getMessage("reload-success", "&aConfiguration reloaded successfully!"));
         } else {
-            sender.sendMessage("&8[&7HopperFilter&8] &cIncorrect command! Usage: /hopperfilter <reload>");
-            }
+            sender.sendMessage(prefix + " " + hopperManager.getMessage("usage", "&7Usage: /hopperfilter <reload>"));
+        }
 
         return true;
     }

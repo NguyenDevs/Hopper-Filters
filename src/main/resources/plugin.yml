@@ -22,5 +22,8 @@ permissions:
     description: Allows players to create unlimited hopper filters.
     default: op
   hopperfilter.limit.<n>:
-    description: Allows players to create up to n hopper filters.
+    description: Allows players to create up to n hopper filters. Use default value in config if not set.
+    default: false
+  hopperfilter.menu.<n>:
+    description: Set menu size per player or rank. Use default value in config if not set.
     default: false

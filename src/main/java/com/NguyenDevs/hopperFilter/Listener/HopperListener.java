@@ -41,7 +41,7 @@ public class HopperListener implements Listener {
             try {
                 plugin.saveConfig();
             } catch (Exception e) {
-                plugin.getLogger().severe("Failed to save config.yml: " + e.getMessage());
+                Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&7HopperFilter&8] &cFailed to save config.yml: " + e.getMessage()));
             }
         }
     }

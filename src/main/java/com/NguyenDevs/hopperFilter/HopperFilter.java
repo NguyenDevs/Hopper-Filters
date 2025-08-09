@@ -37,6 +37,7 @@ public class HopperFilter extends JavaPlugin {
         }
         messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
         hopperManager = new HopperManager(this);
+        hopperManager.loadHopperFilters(); 
         getServer().getPluginManager().registerEvents(new HopperListener(this, hopperManager), this);
         HopperCommand hopperCommand = new HopperCommand(this, hopperManager);
         getCommand("hopperfilter").setExecutor(hopperCommand);

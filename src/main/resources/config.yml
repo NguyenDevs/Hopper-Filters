@@ -1,4 +1,5 @@
 update-notify: true
+default-hopper-limit: 10
 menu-slot: 27
 sound:
   enabled: true

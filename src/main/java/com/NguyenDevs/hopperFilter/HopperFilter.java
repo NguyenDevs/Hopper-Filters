@@ -103,6 +103,7 @@ public class HopperFilter extends JavaPlugin {
         reloadConfig();
         FileConfiguration config = getConfig();
         config.addDefault("update-notify", true);
+        config.addDefault("default-hopper-limit", 10);
         config.addDefault("menu-slot", 27);
         config.addDefault("sound.enabled", true);
         config.addDefault("sound.name", "BLOCK_GRINDSTONE_USE");

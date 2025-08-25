@@ -1,5 +1,6 @@
 update-notify: true
 menu-slot: 27
+default-hopper-limit: 10
 sound:
   enabled: true
   name: BLOCK_GRINDSTONE_USE

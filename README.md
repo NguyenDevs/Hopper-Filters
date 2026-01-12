@@ -9,8 +9,6 @@ With per-player limits, permission-based customization, world-specific toggles, 
 
 Perfect for **Survival**, **Factions**, **Skyblock**, or any server that values precise and beautiful item sorting!
 
-![image](https://github.com/user-attachments/assets/31b13b0c-d8e2-4634-813e-280ae6d081d7)
-
 ## Features
 - **Hopper Filters**  
   Right-click a hopper while sneaking → open a beautiful, customizable GUI to choose exactly which items the hopper will accept.
@@ -26,6 +24,8 @@ Perfect for **Survival**, **Factions**, **Skyblock**, or any server that values 
 
 - **Lightweight & Performant**  
   Designed from the ground up to be efficient — minimal lag even on large servers with thousands of hoppers.
+
+![image](https://github.com/user-attachments/assets/31b13b0c-d8e2-4634-813e-280ae6d081d7)
 
 ## Commands
 - `/hopperfilter reload`  
